@@ -174,14 +174,13 @@ def read_adata(
         print('unrecognized gex_data_type:', gex_data_type, "should be one of ['h5ad', '10x_mtx', '10x_h5', 'loom']")
         exit()
 
-    if adata.isview: # this is so weird
+    if adata.is_view: # this is so weird
         adata = adata.copy()
     return adata
 
 def read_dataset(
-        gex_data,
-        gex_data_type,
         clones_file,
+        adata,
         make_var_names_unique = True,
         keep_cells_without_tcrs = False
 ):
@@ -190,10 +189,9 @@ def read_dataset(
     stores the tcr-dist kPCA info in adata.obsm under the key 'X_pca_tcr'
     stores the tcr info in adata.obs under multiple keys (see store_tcrs_in_adata(...) function)
     '''
-
     include_tcr_nucseq = True
-
-    adata = read_adata(gex_data, gex_data_type)
+    # if adata is None:
+    #     adata = read_adata(gex_data, gex_data_type)
 
     if make_var_names_unique:
         adata.var_names_make_unique() # added
@@ -265,10 +263,10 @@ def read_dataset(
     mask = [ x in barcode2tcr for x in adata.obs.index ]
 
     print(f'Reducing to the {np.sum(mask)} barcodes (out of {adata.shape[0]}) with paired TCR sequence data')
-    assert not adata.isview
+    assert not adata.is_view
     #adata = adata[mask,:]
     adata = adata[mask,:].copy()
-    assert not adata.isview
+    assert not adata.is_view
 
 
     # stash the kPCA info in adata.obsm
@@ -932,4 +930,3 @@ def condense_clones_file_and_barcode_mapping_file_by_tcrdist(
     if output_distfile is not None:
         new_D = D[cluster_centers,:][:,cluster_centers]
         np.savetxt( output_distfile, new_D.astype(float), fmt='%.1f')
-
