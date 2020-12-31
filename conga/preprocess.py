@@ -227,13 +227,8 @@ def read_dataset(
     stores the tcr info in adata.obs under multiple keys (see store_tcrs_in_adata(...) function)
     '''
     include_tcr_nucseq = True
-<<<<<<< HEAD
     # if adata is None:
-    #     adata = read_adata(gex_data, gex_data_type)
-=======
-
-    adata = read_adata(gex_data, gex_data_type, gex_only=gex_only)
-
+    #     adata = read_adata(gex_data, gex_data_type, gex_only=gex_only)
 
     if suffix_for_non_gene_features is not None:
         feature_types_colname = util.get_feature_types_varname( adata )
@@ -243,8 +238,6 @@ def read_dataset(
         print(f'adding {suffix_for_non_gene_features} to {np.sum(ab_mask)} non-GEX features: {adata.var_names[ab_mask]}')
         newnames = [ x+suffix_for_non_gene_features if y else x for x,y in zip(adata.var_names, ab_mask)]
         adata.var.index = newnames
-
->>>>>>> da1dec409f4c231567a896af407e2092ee6409f8
 
     if make_var_names_unique:
         adata.var_names_make_unique() # added
@@ -2034,4 +2027,3 @@ def retrieve_nbr_info_from_adata(
 
     return all_nbrs
 
->>>>>>> da1dec409f4c231567a896af407e2092ee6409f8
