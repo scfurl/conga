@@ -1524,8 +1524,7 @@ def condense_clones_file_and_barcode_mapping_file_by_tcrdist(
     if output_distfile is not None:
         new_D = D[cluster_centers,:][:,cluster_centers]
         np.savetxt( output_distfile, new_D.astype(float), fmt='%.1f')
-<<<<<<< HEAD
-=======
+
 
 
 def calc_tcrdist_nbrs_umap_clusters_cpp(
